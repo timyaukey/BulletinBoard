@@ -78,7 +78,7 @@ namespace BulletinBoard
                         "Created By: " + Environment.NewLine +
                         "Assigned To: " + Environment.NewLine +
                         "Priority: " + Environment.NewLine +
-                        "Due By: " + Environment.NewLine +
+                        "Due Date: " + Environment.NewLine +
                         "--------------------------------" + Environment.NewLine;
                 }
                 File.WriteAllText(fullFilePath, initialContents);
