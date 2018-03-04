@@ -53,7 +53,7 @@ namespace BulletinBoard
                     if (Folders.Count > 0)
                     {
                         CurrentFolder = Folders[0];
-                        CurrentFolder.LoadFiles();
+                        CurrentFolder.LoadFolder();
                     }
                 }
                 else
@@ -63,7 +63,7 @@ namespace BulletinBoard
                     {
                         CurrentFolder = (NoteFolder)tabPage.Tag;
                         if (CurrentFolder.NeedsRefresh)
-                            CurrentFolder.LoadFiles();
+                            CurrentFolder.LoadFolder();
                     }
                 }
             }
@@ -105,24 +105,17 @@ namespace BulletinBoard
                 //tabPage.Size = new System.Drawing.Size(500, 400);
                 //tabPage.BorderStyle = BorderStyle.None;
                 tabPage.TabIndex = tabIndex++;
+                MainTab.Controls.Add(tabPage);
 
                 ListView lvw = new ListView();
-                lvw.View = View.Details;
                 tabPage.Controls.Add(lvw);
-                MainTab.Controls.Add(tabPage);
+                lvw.View = View.Details;
                 lvw.Dock = DockStyle.Fill;
                 lvw.BorderStyle = BorderStyle.None;
                 lvw.FullRowSelect = true;
                 lvw.HideSelection = false;
                 lvw.DoubleClick += _ItemDoubleClickHandler;
                 lvw.Visible = true;
-
-                int otherColumnWidths = 110 + 110;
-                lvw.Columns.Add("Description", lvw.ClientSize.Width - otherColumnWidths - 10);
-                lvw.Columns.Add("Created On", 110);
-                lvw.Columns.Add("Updated On", 110);
-                //lvw.Location = new System.Drawing.Point(5, 5);
-                //lvw.Size = new System.Drawing.Size(500, 300);
 
                 NoteFolder folder = new NoteFolder(this);
                 tabPage.Tag = folder;

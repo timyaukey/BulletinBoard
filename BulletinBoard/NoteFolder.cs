@@ -64,15 +64,92 @@ namespace BulletinBoard
             try
             {
                 if (NeedsRefresh)
-                    LoadFiles();
+                    LoadFolder();
             }
             finally
             {
                 Monitor.Exit(System.LockObject);
             }
         }
-        
-        public void LoadFiles()
+
+        public void LoadFolder()
+        {
+            LoadColumnDefs();
+            ConfigureColumns();
+            LoadFiles();
+        }
+
+        private void LoadColumnDefs()
+        {
+            ExtraColumns = new List<ExtraColumnDef>();
+            string configFileName = GetConfigFilePath("ColumnDefs.txt");
+            if (File.Exists(configFileName))
+            {
+                using (TextReader reader = new StreamReader(configFileName))
+                {
+                    for (;;)
+                    {
+                        string line = reader.ReadLine();
+                        if (line == null)
+                            break;
+                        int colonIndex = line.IndexOf(":");
+                        if (colonIndex > 0)
+                        {
+                            int columnWidth;
+                            if (int.TryParse(line.Substring(colonIndex + 1).Trim(), out columnWidth))
+                            {
+                                ExtraColumnDef extraDef = new ExtraColumnDef(line.Substring(0, colonIndex).Trim(), columnWidth);
+                                ExtraColumns.Add(extraDef);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Column definition error for folder \"" + LabelText + "\": All lines must be <field name>:<width>");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ExtraColumns.Add(new ExtraColumnDef("Assigned To", 110));
+                ExtraColumns.Add(new ExtraColumnDef("Due Date", 110));
+                ExtraColumns.Add(new ExtraColumnDef("Created On", 110));
+                ExtraColumns.Add(new ExtraColumnDef("Updated On", 110));
+            }
+        }
+
+        private void ConfigureColumns()
+        {
+            int otherColumnWidths = 0;
+            LvwFiles.Columns.Clear();
+            foreach(ExtraColumnDef extraDef in ExtraColumns)
+            {
+                otherColumnWidths += extraDef.Width;
+            }
+            LvwFiles.Columns.Add("Description", LvwFiles.ClientSize.Width - otherColumnWidths - 10);
+            foreach(ExtraColumnDef extraDef in ExtraColumns)
+            {
+                LvwFiles.Columns.Add(extraDef.FieldName, extraDef.Width);
+            }
+        }
+
+        private List<ExtraColumnDef> ExtraColumns;
+
+        private class ExtraColumnDef
+        {
+            public ExtraColumnDef(string fieldName, int width)
+            {
+                FieldName = fieldName;
+                NormalizedName = FieldName.ToLower().Replace(" ", "");
+                Width = width;
+            }
+
+            public readonly string FieldName;
+            public readonly string NormalizedName;
+            public readonly int Width;
+        }
+
+        private void LoadFiles()
         {
             LvwFiles.Items.Clear();
             Files = new List<NoteFile>();
@@ -86,11 +163,33 @@ namespace BulletinBoard
                     noteFile.LabelText = file.Name;
                     noteFile.CreatedAt = file.CreationTime;
                     noteFile.ModifiedAt = file.LastWriteTime;
-                    ListViewItem item = new ListViewItem(new string[] {
-                        noteFile.LabelText,
-                        noteFile.CreatedAt.ToString("MM/dd/yy hh:mmtt"),
-                        noteFile.ModifiedAt.ToString("MM/dd/yy hh:mmtt")
-                    });
+                    noteFile.Load();
+                    List<string> columnValues = new List<string>();
+                    columnValues.Add(noteFile.LabelText);
+                    foreach(ExtraColumnDef extraDef in ExtraColumns)
+                    {
+                        switch (extraDef.NormalizedName)
+                        {
+                            case "createdon":
+                                columnValues.Add(noteFile.CreatedAt.ToString("MM/dd/yy hh:mmtt"));
+                                break;
+                            case "updatedon":
+                                columnValues.Add(noteFile.ModifiedAt.ToString("MM/dd/yy hh:mmtt"));
+                                break;
+                            default:
+                                string dataValue;
+                                if (noteFile.DataFields.TryGetValue(extraDef.NormalizedName, out dataValue))
+                                {
+                                    columnValues.Add(dataValue);
+                                }
+                                else
+                                {
+                                    columnValues.Add("");
+                                }
+                                break;
+                        }
+                    }
+                    ListViewItem item = new ListViewItem(columnValues.ToArray());
                     item.Tag = noteFile;
                     LvwFiles.Items.Add(item);
                 }

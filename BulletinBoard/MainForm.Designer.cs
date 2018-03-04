@@ -51,7 +51,7 @@
             this.tabMain.Margin = new System.Windows.Forms.Padding(0);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(788, 441);
+            this.tabMain.Size = new System.Drawing.Size(992, 441);
             this.tabMain.TabIndex = 0;
             this.tabMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabMain_Selected);
             // 
@@ -72,7 +72,7 @@
             this.menuExit});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(806, 24);
+            this.menuMain.Size = new System.Drawing.Size(1010, 24);
             this.menuMain.TabIndex = 1;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -130,7 +130,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(806, 485);
+            this.ClientSize = new System.Drawing.Size(1010, 485);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.menuMain);
             this.MainMenuStrip = this.menuMain;
