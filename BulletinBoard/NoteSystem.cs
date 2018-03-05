@@ -56,7 +56,7 @@ namespace BulletinBoard
                         CurrentFolder.LoadFolder();
                     }
                 }
-                else
+                else 
                 {
                     TabPage tabPage = MainTab.SelectedTab;
                     if (tabPage != null)
