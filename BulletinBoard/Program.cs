@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BulletinBoard
@@ -16,6 +16,13 @@ namespace BulletinBoard
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            bool firstInstance;
+            Mutex singleRunMutex = new Mutex(true, "WCBulletinBoard", out firstInstance);
+            if (!firstInstance)
+            {
+                ShowErrorMessage("The Bulletin Board program is already running. Look for the icon on your task bar.");
+                return;
+            }
             if (args.Length == 0)
             {
                 ShowErrorMessage("Usage: BulletinBoard <rootfolder>");
