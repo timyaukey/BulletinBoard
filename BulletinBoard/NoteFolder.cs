@@ -74,9 +74,30 @@ namespace BulletinBoard
 
         public void LoadFolder()
         {
+            SetTabName();
             LoadColumnDefs();
             ConfigureColumns();
             LoadFiles();
+        }
+
+        public void SetTabName()
+        {
+            int noteCount = GetNoteCount();
+            Tab.Text = this.LabelText + (noteCount > 0 ? " (" + noteCount + ")" : "");
+        }
+
+        public int GetNoteCount()
+        {
+            int noteCount = 0;
+            DirectoryInfo dir = new DirectoryInfo(GetFullPath());
+            foreach (FileInfo file in dir.EnumerateFiles())
+            {
+                if (IsNoteFile(file))
+                {
+                    noteCount++;
+                }
+            }
+            return noteCount;
         }
 
         private void LoadColumnDefs()
@@ -156,7 +177,7 @@ namespace BulletinBoard
             DirectoryInfo dir = new DirectoryInfo(GetFullPath());
             foreach(FileInfo file in dir.EnumerateFiles())
             {
-                if (file.Extension.ToLower()==".txt")
+                if (IsNoteFile(file))
                 {
                     NoteFile noteFile = new NoteFile(System, this);
                     noteFile.BareFileName = file.Name;
@@ -195,6 +216,11 @@ namespace BulletinBoard
                 }
             }
             NeedsRefresh = false;
+        }
+
+        private bool IsNoteFile(FileInfo file)
+        {
+            return file.Extension.ToLower() == ".txt";
         }
     }
 }

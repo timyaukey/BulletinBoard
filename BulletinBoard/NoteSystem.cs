@@ -101,7 +101,6 @@ namespace BulletinBoard
                         labelText = labelText.Substring(dashIndex + 1);
                     }
                 }
-                tabPage.Text = labelText;
                 //tabPage.Size = new System.Drawing.Size(500, 400);
                 //tabPage.BorderStyle = BorderStyle.None;
                 tabPage.TabIndex = tabIndex++;
@@ -124,6 +123,7 @@ namespace BulletinBoard
                 folder.LabelText = labelText;
                 folder.Tab = tabPage;
                 folder.LvwFiles = lvw;
+                folder.SetTabName();
                 folder.RequestRefresh();
                 Folders.Add(folder);
             }
