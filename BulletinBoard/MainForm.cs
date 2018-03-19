@@ -85,6 +85,10 @@ namespace BulletinBoard
                 _System.RefreshCurrentFolder();
                 EditFile(fullFilePath);
             }
+            catch(Exception ex)
+            {
+                ShowException(ex);
+            }
             finally
             {
                 Monitor.Exit(_System.LockObject);
@@ -101,6 +105,10 @@ namespace BulletinBoard
                     return;
                 EditFile(file.GetFullPath());
             }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
             finally
             {
                 Monitor.Exit(_System.LockObject);
@@ -116,6 +124,10 @@ namespace BulletinBoard
                 if (file == null)
                     return;
                 EditFile(file.GetFullPath());
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
             }
             finally
             {
@@ -136,6 +148,10 @@ namespace BulletinBoard
                 string newFullPath = _System.CurrentFolder.GetFullPath(newNoteName + ".txt");
                 File.Move(GetSelectedFile().GetFullPath(), newFullPath);
                 _System.RefreshCurrentFolder();
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
             }
             finally
             {
@@ -164,6 +180,10 @@ namespace BulletinBoard
                 File.Move(file.GetFullPath(), archiveFilePath);
                 _System.RefreshCurrentFolder();
             }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
             finally
             {
                 Monitor.Exit(_System.LockObject);
@@ -188,6 +208,30 @@ namespace BulletinBoard
             {
                 File.Delete(file.GetFullPath());
                 _System.RefreshCurrentFolder();
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
+            finally
+            {
+                Monitor.Exit(_System.LockObject);
+            }
+        }
+
+        private void menuExplore_Click(object sender, EventArgs e)
+        {
+            Monitor.Enter(_System.LockObject);
+            try
+            {
+                string tabFolder = _System.CurrentFolder.GetFullPath();
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(tabFolder);
+                startInfo.UseShellExecute = true;
+                System.Diagnostics.Process.Start(startInfo);
+            }
+            catch(Exception ex)
+            {
+                ShowException(ex);
             }
             finally
             {
@@ -227,6 +271,11 @@ namespace BulletinBoard
         private void ShowErrorMessage(string msg)
         {
             MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void ShowException(Exception ex)
+        {
+            MessageBox.Show(ex.Message);
         }
 
         private void menuExit_Click(object sender, EventArgs e)

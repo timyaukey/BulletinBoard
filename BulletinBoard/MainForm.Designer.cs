@@ -40,6 +40,7 @@
             this.menuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.menuInstructions = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExplore = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,6 +70,7 @@
             this.menuRename,
             this.menuArchive,
             this.menuDelete,
+            this.menuExplore,
             this.menuInstructions,
             this.menuExit});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
@@ -126,6 +128,13 @@
             this.menuExit.Text = "Exit";
             this.menuExit.Click += new System.EventHandler(this.menuExit_Click);
             // 
+            // menuExplore
+            // 
+            this.menuExplore.Name = "menuExplore";
+            this.menuExplore.Size = new System.Drawing.Size(57, 20);
+            this.menuExplore.Text = "Explore";
+            this.menuExplore.Click += new System.EventHandler(this.menuExplore_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -159,5 +168,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuDelete;
         private System.Windows.Forms.ToolStripMenuItem menuInstructions;
         private System.Windows.Forms.ToolStripMenuItem menuExit;
+        private System.Windows.Forms.ToolStripMenuItem menuExplore;
     }
 }
