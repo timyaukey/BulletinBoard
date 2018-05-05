@@ -58,12 +58,17 @@ namespace BulletinBoard
                 }
                 else 
                 {
-                    TabPage tabPage = MainTab.SelectedTab;
-                    if (tabPage != null)
+                    //TabPage tabPage = MainTab.SelectedTab;
+                    //if (tabPage != null)
+                    //{
+                    //    CurrentFolder = (NoteFolder)tabPage.Tag;
+                    //    if (CurrentFolder.NeedsRefresh)
+                    //        CurrentFolder.LoadFolder();
+                    //}
+                    foreach(NoteFolder folder in Folders)
                     {
-                        CurrentFolder = (NoteFolder)tabPage.Tag;
-                        if (CurrentFolder.NeedsRefresh)
-                            CurrentFolder.LoadFolder();
+                        if (folder.NeedsRefresh)
+                            folder.LoadFolder();
                     }
                 }
             }
