@@ -159,6 +159,30 @@ namespace BulletinBoard
             }
         }
 
+        private void menuMove_Click(object sender, EventArgs e)
+        {
+            Monitor.Enter(_System.LockObject);
+            try
+            {
+                if (GetSelectedFile() == null)
+                    return;
+                NoteFolder newNoteFolder = FolderNameForm.GetValue("Enter note tab to move to:", _System);
+                if (newNoteFolder == null)
+                    return;
+                string newFullPath = newNoteFolder.GetFullPath(GetSelectedFile().BareFileName);
+                File.Move(GetSelectedFile().GetFullPath(), newFullPath);
+                _System.RefreshCurrentFolder();
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
+            finally
+            {
+                Monitor.Exit(_System.LockObject);
+            }
+        }
+
         private void menuArchive_Click(object sender, EventArgs e)
         {
             NoteFile file = GetSelectedFile();

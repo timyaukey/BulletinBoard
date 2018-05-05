@@ -38,9 +38,10 @@
             this.menuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.menuArchive = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExplore = new System.Windows.Forms.ToolStripMenuItem();
             this.menuInstructions = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuExplore = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMove = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,6 +69,7 @@
             this.menuNew,
             this.menuEdit,
             this.menuRename,
+            this.menuMove,
             this.menuArchive,
             this.menuDelete,
             this.menuExplore,
@@ -114,6 +116,13 @@
             this.menuDelete.Text = "Delete";
             this.menuDelete.Click += new System.EventHandler(this.menuDelete_Click);
             // 
+            // menuExplore
+            // 
+            this.menuExplore.Name = "menuExplore";
+            this.menuExplore.Size = new System.Drawing.Size(57, 20);
+            this.menuExplore.Text = "Explore";
+            this.menuExplore.Click += new System.EventHandler(this.menuExplore_Click);
+            // 
             // menuInstructions
             // 
             this.menuInstructions.Name = "menuInstructions";
@@ -128,12 +137,12 @@
             this.menuExit.Text = "Exit";
             this.menuExit.Click += new System.EventHandler(this.menuExit_Click);
             // 
-            // menuExplore
+            // menuMove
             // 
-            this.menuExplore.Name = "menuExplore";
-            this.menuExplore.Size = new System.Drawing.Size(57, 20);
-            this.menuExplore.Text = "Explore";
-            this.menuExplore.Click += new System.EventHandler(this.menuExplore_Click);
+            this.menuMove.Name = "menuMove";
+            this.menuMove.Size = new System.Drawing.Size(49, 20);
+            this.menuMove.Text = "Move";
+            this.menuMove.Click += new System.EventHandler(this.menuMove_Click);
             // 
             // MainForm
             // 
@@ -169,5 +178,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuInstructions;
         private System.Windows.Forms.ToolStripMenuItem menuExit;
         private System.Windows.Forms.ToolStripMenuItem menuExplore;
+        private System.Windows.Forms.ToolStripMenuItem menuMove;
     }
 }
