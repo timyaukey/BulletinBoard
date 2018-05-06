@@ -34,7 +34,7 @@ namespace BulletinBoard
 
         public string GetArchiveDirPath()
         {
-            string archiveDirPath = System.CurrentFolder.GetFullPath("Archive");
+            string archiveDirPath = /*System.CurrentFolder.*/GetFullPath("Archive");
             if (!Directory.Exists(archiveDirPath))
                 Directory.CreateDirectory(archiveDirPath);
             return archiveDirPath;
@@ -42,7 +42,7 @@ namespace BulletinBoard
 
         public string GetConfigDirPath()
         {
-            string configDirPath = System.CurrentFolder.GetFullPath("Config");
+            string configDirPath = /*System.CurrentFolder.*/GetFullPath("Config");
             if (!Directory.Exists(configDirPath))
                 Directory.CreateDirectory(configDirPath);
             return configDirPath;
